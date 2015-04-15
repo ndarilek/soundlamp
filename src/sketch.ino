@@ -1,32 +1,33 @@
-int speakerPin = 9;
+#include <MozziGuts.h> // this makes everything work 
+#include <Metronome.h>
+#include <SampleHuffman.h>
 
-const int highChirp = 20;
+#include "chirp.h"
 
-const int lowChirp = 14;
+SampleHuffman chirp(CHIRP_SOUNDDATA, CHIRP_HUFFMAN, CHIRP_SAMPLE_BITS);
 
+Metronome metronome(500);
 
-
-const int chirpCycle = 70;
-
-const int chirpPause = 8;
-
-const int numChirps = 10;
-
-const int midChirp = 150;
+#define DEBUG 1
 
 void setup() {
-  pinMode(speakerPin, OUTPUT);
+  startMozzi();
+  if(DEBUG)
+    Serial.begin(9600);
 }
 
-int baseFrequency = 10000;
+void updateControl(){
+  if(metronome.ready()) {
+    if(DEBUG)
+      Serial.println("chirp");
+    chirp.start();
+  }
+}
 
-int width = 100;
+int updateAudio(){
+  return chirp.next();
+}
 
 void loop() {
-  for(int i = baseFrequency; i < baseFrequency+width; i++) {
-    tone(speakerPin, i);
-    delay(1);
-  }
-  noTone(speakerPin);
-  delay(1000-width);
+  audioHook();
 }
