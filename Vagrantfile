@@ -18,8 +18,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, inline: """
     adduser vagrant dialout
     apt-get update
-    apt-get install --no-install-recommends -y arduino python-pip picocom linux-image-extra-`uname -r`
-    pip install ino
+    apt-get install --no-install-recommends -y arduino python-dev python-pip python-numpy python-matplotlib libsndfile-dev picocom linux-image-extra-`uname -r`
+    pip install ino scikits.audiolab
+    cd /usr/local/src
+    wget http://grrrr.org/data/dev/purehuff/purehuff-0.2.tar.gz
+    tar xf purehuff-*.tar.gz
+    rm purehuff*gz
+    cd purehuff-*
+    python setup.py install
   """
 
 end
