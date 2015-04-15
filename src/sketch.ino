@@ -3,6 +3,8 @@
 #include <Oscil.h>
 #include <tables/sin2048_int8.h>
 
+#include "config.h"
+
 Oscil <SIN2048_NUM_CELLS, AUDIO_RATE> chirp(SIN2048_DATA);
 
 Metronome metronome(500);
