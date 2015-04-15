@@ -1,6 +1,6 @@
 # Soundlamp
 
-An experimental hardware-based echolocation aid. More details soon.
+An experimental hardware-based echolocation aid for blind users. More details soon.
 
 ## Building
 
