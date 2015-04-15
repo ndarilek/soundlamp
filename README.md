@@ -16,7 +16,8 @@ This places you in a shell within a newly-created virtual machine, with the Ardu
 
 [Ino](http://www.inotool.org) is used to build Soundlamp. To build, run:
 
-`ino build`
+    cp etc/mozzi_config.h lib/mozzi
+    ino build
 
 If all is successful, run:
 
