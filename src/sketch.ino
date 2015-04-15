@@ -74,7 +74,7 @@ void updateControl(){
     counter++;
     if(counter == 4)
       counter = 0;
-  } else if(now-lastReady <= 10000) {
+  } else if(now > lastReady && now-lastReady <= 10000) {
     float ratio = (now-lastReady)/10000;
     chirp.setFreq(baseFreq+baseFreqOffset+((int)ratio*bandwidth));
   } else
