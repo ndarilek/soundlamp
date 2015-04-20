@@ -3,8 +3,6 @@
 #include <Oscil.h>
 #include <tables/sin2048_int8.h>
 
-#include "config.h"
-
 Oscil <SIN2048_NUM_CELLS, AUDIO_RATE> chirp(SIN2048_DATA);
 
 Metronome metronome(500);
@@ -24,8 +22,6 @@ unsigned long lastReady = 0;
 
 const int bandwidth = 3000;
 
-int counter = 0;
-
 /*
  * Lower-frequency pulses travel further and cut through ambient sound, but provide less detail.
  * Higher-frequency pulses give more detail but travel less far, and are obscured by ambience.
@@ -38,6 +34,8 @@ int counter = 0;
 */
 
 int pulseMode = 0;
+
+int counter = 0;
 
 bool shouldLongPulse() {
   if(pulseMode == 0)
@@ -63,6 +61,8 @@ bool shouldLongPulse() {
 
 int baseFreqOffset = 0;
 
+#define PULSE_LENGTH 10000
+
 void updateControl(){
   unsigned long now = mozziMicros();
   if(metronome.ready()) {
@@ -76,8 +76,8 @@ void updateControl(){
     counter++;
     if(counter == 4)
       counter = 0;
-  } else if(now > lastReady && now-lastReady <= 10000) {
-    float ratio = (now-lastReady)/10000;
+  } else if(now > lastReady && now-lastReady <= PULSE_LENGTH) {
+    float ratio = (now-lastReady)/PULSE_LENGTH;
     chirp.setFreq(baseFreq+baseFreqOffset+((int)ratio*bandwidth));
   } else
     lastReady = 0;
